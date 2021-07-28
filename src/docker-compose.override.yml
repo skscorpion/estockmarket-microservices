@@ -1,0 +1,59 @@
+version: '3.4'
+
+services:
+  companydb:
+    container_name: companydb
+    restart: always
+    ports:
+        - "27017:27017"
+    volumes:
+        - mongo_data:/data/db
+
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+
+  company.api:
+    container_name: company.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://companydb:27017"
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+    depends_on:
+      - companydb
+    ports:
+      - "8000:80"
+
+  ocelotapigw:
+    container_name: ocelotapigw
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+    depends_on:
+        - company.api
+    ports:
+      - "8010:80"
+
+  elasticsearch:
+    container_name: elasticsearch
+    environment:
+        - xpack.monitoring.enabled=true
+        - xpack.watcher.enabled=false
+        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        - discovery.type=single-node
+    ports:
+        - "9200:9200"
+    volumes:
+        - elasticsearch-data:/usr/share/elasticsearch/data   
+
+  kibana:
+    container_name: kibana
+    environment:        
+        - ELASTICSEARCH_URL=http://elasticsearch:9200
+    depends_on:
+        - elasticsearch
+    ports:
+        - "5601:5601"  
