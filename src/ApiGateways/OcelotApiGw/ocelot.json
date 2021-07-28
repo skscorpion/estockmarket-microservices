@@ -37,6 +37,32 @@
       ],
       "UpstreamPathTemplate": "/Company/GetProductByCategory/{category}",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+    //Stock API
+    {
+      "DownstreamPathTemplate": "/api/v1/Stock",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Stock",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Stock/{code}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Stock/{code}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
     }
   ],
   "GlobalConfiguration": {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Stock.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class StockController : ControllerBase
     {
         private readonly ICosmosDbService _cosmosDbService;
@@ -22,14 +22,14 @@ namespace Stock.API.Controllers
             _cosmosDbService = cosmosDbService;
         }
 
-        [HttpGet("Stock")]
+        [HttpGet("{code:length(20)}", Name = "GetStock")]
         public async Task<IActionResult> Get(string code)
         {
             _logger.LogInformation("return all stocks related to {code}", code);
             return Ok(await _cosmosDbService.GetItemsAsync($"SELECT * FROM c WHERE c.code = '{code}'"));
         }
 
-        [HttpGet("Stocks")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _cosmosDbService.GetItemsAsync("SELECT * FROM c"));
