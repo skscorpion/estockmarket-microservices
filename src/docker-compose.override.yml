@@ -27,6 +27,14 @@ services:
     ports:
       - "8000:80"
 
+  stock.api:
+    container_name: stock.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+    ports:
+      - "8001:80"
+
   ocelotapigw:
     container_name: ocelotapigw
     environment:
@@ -34,6 +42,7 @@ services:
       - "ElasticConfiguration:Uri=http://elasticsearch:9200"
     depends_on:
         - company.api
+        - stock.api
     ports:
       - "8010:80"
 

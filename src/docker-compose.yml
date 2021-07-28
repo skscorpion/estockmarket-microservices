@@ -13,6 +13,12 @@ services:
       context: .
       dockerfile: Services/Company/Company.API/Dockerfile
 
+  stock.api:
+    image: ${DOCKER_REGISTRY-}stockapi
+    build:
+      context: .
+      dockerfile: Services/Stock/Stock.API/Dockerfile
+
   ocelotapigw:
     image: ${DOCKER_REGISTRY-}ocelotapigw
     build:
