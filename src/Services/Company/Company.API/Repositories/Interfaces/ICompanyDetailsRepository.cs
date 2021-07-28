@@ -8,13 +8,13 @@ namespace Company.API.Repositories.Interfaces
 {
     public interface ICompanyDetailsRepository
     {
-        Task<IEnumerable<CompanyDetails>> GetProducts();
-        Task<CompanyDetails> GetProduct(string id);
-        Task<IEnumerable<CompanyDetails>> GetProductByName(string name);
-        Task<IEnumerable<CompanyDetails>> GetProductByCategory(string categoryName);
+        Task<IEnumerable<CompanyDetails>> GetCompanies();
+        Task<CompanyDetails> GetCompany(string id);
+        Task<IEnumerable<CompanyDetails>> GetCompanyByName(string name);
+        Task<IEnumerable<CompanyDetails>> GetCompanyByCode(string categoryName);
 
-        Task CreateProduct(CompanyDetails product);
-        Task<bool> UpdateProduct(CompanyDetails product);
-        Task<bool> DeleteProduct(string id);
+        Task CreateCompany(CompanyDetails product);
+        Task<bool> UpdateCompany(CompanyDetails product);
+        Task<bool> DeleteCompany(string id);
     }
 }

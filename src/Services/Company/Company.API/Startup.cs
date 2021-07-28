@@ -3,6 +3,7 @@ using Company.API.Data.Interfaces;
 using Company.API.Repositories;
 using Company.API.Repositories.Interfaces;
 using HealthChecks.UI.Client;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,16 @@ namespace Company.API
         {
             services.AddScoped<ICompanyContext, CompanyContext>();
             services.AddScoped<ICompanyDetailsRepository, CompanyDetailsRepository>();
+
+            services.AddMassTransit(config =>
+            {
+                config.UsingRabbitMq((ctx, cnf) =>
+                {
+                    cnf.Host(Configuration["EventBusSettings:HostAddress"]);
+                }
+                );
+            });
+            services.AddMassTransitHostedService();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

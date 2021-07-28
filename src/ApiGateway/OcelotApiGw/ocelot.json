@@ -27,7 +27,7 @@
       "UpstreamHttpMethod": [ "GET", "DELETE" ]
     },
     {
-      "DownstreamPathTemplate": "/api/v1/Company/GetProductByCategory/{category}",
+      "DownstreamPathTemplate": "/api/v1/Company/GetCompanyByCode/{code}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -35,7 +35,19 @@
           "Port": "8000"
         }
       ],
-      "UpstreamPathTemplate": "/Company/GetProductByCategory/{category}",
+      "UpstreamPathTemplate": "/Company/GetCompanyByCode/{code}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Company/GetCompanyByName/{name}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8000"
+        }
+      ],
+      "UpstreamPathTemplate": "/Company/GetCompanyByName/{name}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     //Stock API

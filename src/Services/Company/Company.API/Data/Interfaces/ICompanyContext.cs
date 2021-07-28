@@ -5,6 +5,6 @@ namespace Company.API.Data.Interfaces
 {
     public interface ICompanyContext
     {
-        IMongoCollection<CompanyDetails> Products { get; }
+        IMongoCollection<CompanyDetails> Companies { get; }
     }
 }

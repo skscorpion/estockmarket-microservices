@@ -1,0 +1,83 @@
+{
+  "Routes": [
+    //Company API
+    {
+      "DownstreamPathTemplate": "/api/v1/Company",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "company.api",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/Company",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Company/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "company.api",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/Company/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Company/GetCompanyByCode/{code}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8000"
+        }
+      ],
+      "UpstreamPathTemplate": "/Company/GetCompanyByCode/{code}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Company/GetCompanyByName/{name}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8000"
+        }
+      ],
+      "UpstreamPathTemplate": "/Company/GetCompanyByName/{name}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    //Stock API
+    {
+      "DownstreamPathTemplate": "/api/v1/Stock",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock.api",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/Stock",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Stock/{code}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stock.api",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/Stock/{code}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5010"
+  }
+}

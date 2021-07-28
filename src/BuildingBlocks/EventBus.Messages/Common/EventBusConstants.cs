@@ -2,6 +2,6 @@
 {
     public static class EventBusConstants
 	{
-		public const string BasketCheckoutQueue = "basketcheckout-queue";
+		public const string DeletedCompanyQueue = "deletedcompany-queue";
 	}
 }

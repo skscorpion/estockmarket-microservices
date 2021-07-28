@@ -25,47 +25,47 @@ namespace Company.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<CompanyDetails>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<CompanyDetails>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<CompanyDetails>>> GetCompanies()
         {
-            var products = await _repository.GetProducts();
+            var products = await _repository.GetCompanies();
             return Ok(products);
         }
 
-        [HttpGet("{id:length(24)}", Name = "GetProduct")]
+        [HttpGet("{id:length(24)}", Name = "GetCompany")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(CompanyDetails), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<CompanyDetails>> GetProductById(string id)
+        public async Task<ActionResult<CompanyDetails>> GetCompanyById(string id)
         {
-            var product = await _repository.GetProduct(id);
+            var product = await _repository.GetCompany(id);
 
             if (product == null)
             {
-                _logger.LogError($"Product with id: {id}, not found.");
+                _logger.LogError($"Company with id: {id}, not found.");
                 return NotFound();
             }
 
             return Ok(product);
         }
 
-        [Route("[action]/{category}", Name = "GetProductByCategory")]
+        [Route("[action]/{category}", Name = "GetCompanyByCode")]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<CompanyDetails>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<CompanyDetails>>> GetProductByCategory(string category)
+        public async Task<ActionResult<IEnumerable<CompanyDetails>>> GetCompanyByCode(string category)
         {
-            var products = await _repository.GetProductByCategory(category);
+            var products = await _repository.GetCompanyByCode(category);
             return Ok(products);
         }
 
-        [Route("[action]/{name}", Name = "GetProductByName")]
+        [Route("[action]/{name}", Name = "GetCompanyByName")]
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(IEnumerable<CompanyDetails>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<CompanyDetails>>> GetProductByName(string name)
+        public async Task<ActionResult<IEnumerable<CompanyDetails>>> GetCompanyByName(string name)
         {
-            var items = await _repository.GetProductByName(name);
+            var items = await _repository.GetCompanyByName(name);
             if (items == null)
             {
-                _logger.LogError($"Products with name: {name} not found.");
+                _logger.LogError($"Companies with name: {name} not found.");
                 return NotFound();
             }
             return Ok(items);
@@ -73,25 +73,25 @@ namespace Company.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(CompanyDetails), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<CompanyDetails>> CreateProduct([FromBody] CompanyDetails product)
+        public async Task<ActionResult<CompanyDetails>> CreateCompany([FromBody] CompanyDetails product)
         {
-            await _repository.CreateProduct(product);
+            await _repository.CreateCompany(product);
 
-            return CreatedAtRoute("GetProduct", new { id = product.Id }, product);
+            return CreatedAtRoute("GetCompany", new { id = product.Id }, product);
         }
 
         [HttpPut]
         [ProducesResponseType(typeof(CompanyDetails), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateProduct([FromBody] CompanyDetails product)
+        public async Task<IActionResult> UpdateCompany([FromBody] CompanyDetails product)
         {
-            return Ok(await _repository.UpdateProduct(product));
+            return Ok(await _repository.UpdateCompany(product));
         }
 
-        [HttpDelete("{id:length(24)}", Name = "DeleteProduct")]        
+        [HttpDelete("{id:length(24)}", Name = "DeleteCompany")]        
         [ProducesResponseType(typeof(CompanyDetails), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> DeleteProductById(string id)
+        public async Task<IActionResult> DeleteCompanyById(string id)
         {
-            return Ok(await _repository.DeleteProduct(id));
+            return Ok(await _repository.DeleteCompany(id));
         }
     }
 }

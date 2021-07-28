@@ -17,13 +17,13 @@ services:
     image: ${DOCKER_REGISTRY-}stockapi
     build:
       context: .
-      dockerfile: Services/Stock/Stock.API/Dockerfile
+      dockerfile: Services/Stock/Dockerfile
 
   ocelotapigw:
     image: ${DOCKER_REGISTRY-}ocelotapigw
     build:
       context: .
-      dockerfile: ApiGateways/OcelotApiGw/Dockerfile 
+      dockerfile: ApiGateway/OcelotApiGw/Dockerfile 
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2

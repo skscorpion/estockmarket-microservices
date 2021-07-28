@@ -8,14 +8,14 @@ namespace Company.API.Data
     public class CompanyContext : ICompanyContext
     {
         public CompanyContext(IConfiguration configuration)
-        {            
+        {
             var client = new MongoClient(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
             var database = client.GetDatabase(configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
 
-            Products = database.GetCollection<CompanyDetails>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
-            CompanyContextSeed.SeedData(Products);
-        }
+            Companies = database.GetCollection<CompanyDetails>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
+            CompanyContextSeed.SeedData(Companies);
+        } 
 
-        public IMongoCollection<CompanyDetails> Products { get; }
+        public IMongoCollection<CompanyDetails> Companies { get; }
     }
 }

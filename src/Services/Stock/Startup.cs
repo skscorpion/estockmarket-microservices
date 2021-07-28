@@ -1,9 +1,13 @@
+using EventBus.Messages.Common;
+using EventBus.Messages.Events;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Stock.API.EventBusConsumer;
 using Stock.API.Services;
 using System;
 using System.Collections.Generic;
@@ -25,6 +29,21 @@ namespace Stock.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMassTransit(config =>
+            {
+                config.AddConsumer<CompanyDeletedConsumer>();
+                config.UsingRabbitMq((ctx, cnf) =>
+                {
+                    cnf.Host(Configuration["EventBusSettings:HostAddress"]);
+                    cnf.ReceiveEndpoint(EventBusConstants.DeletedCompanyQueue, c=>
+                    {
+                        c.ConfigureConsumer<CompanyDeletedConsumer>(ctx);
+                    })
+                }
+                );
+            });
+            services.AddMassTransitHostedService();
+
             services.AddControllers();
             services.AddControllersWithViews();
             services.AddSingleton<ICosmosDbService>(InitializeCosmosClientInstanceAsync(Configuration.GetSection("CosmosDb")).GetAwaiter().GetResult());
