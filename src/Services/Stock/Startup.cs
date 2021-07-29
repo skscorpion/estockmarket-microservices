@@ -35,10 +35,10 @@ namespace Stock.API
                 config.UsingRabbitMq((ctx, cnf) =>
                 {
                     cnf.Host(Configuration["EventBusSettings:HostAddress"]);
-                    cnf.ReceiveEndpoint(EventBusConstants.DeletedCompanyQueue, c=>
+                    cnf.ReceiveEndpoint(EventBusConstants.DeletedCompanyQueue, c =>
                     {
                         c.ConfigureConsumer<CompanyDeletedConsumer>(ctx);
-                    })
+                    });
                 }
                 );
             });
